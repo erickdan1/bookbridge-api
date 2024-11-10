@@ -3,11 +3,16 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll",
-    "test:staged": "jest"
+    "test": "jest --watch",
+    "test:unit": "npm test -- -c jest-unit-config.js",
+    "test:integration": "npm test -- -c jest-integration-config.js",
+    "test:staged": "jest --PassWithNoTests --findRelatedTests --silent",
+    "test:ci": "jest --coverage --noStackTrace --silent"
   },
   "standard": {
-    "env": ["jest"]
+    "env": [
+      "jest"
+    ]
   },
   "lint-staged": {
     "*.js": [
@@ -18,7 +23,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run test:ci"
     }
   },
   "author": "",
@@ -29,5 +35,10 @@
     "jest": "^29.7.0",
     "lint-staged": "^15.2.10",
     "standard": "^17.1.2"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "validator": "^13.12.0"
   }
 }
